@@ -1,17 +1,17 @@
+import re
+
+
 class Solutions:  # jangan di copy
     def solution(s):
         # Receive Input as List
         input = s
+        print(input)
 
         # Convert input to lowercase
         convert_lower = input.lower()
 
         # Split convert_lower to list
         split = (list(convert_lower))
-        print(split)
-
-        # cap_check = [capital[0].isupper() for capital in split]
-        # print(cap_check)
 
         lexicon = {
             "a": "100000",
@@ -43,9 +43,20 @@ class Solutions:  # jangan di copy
             " ": "000000",
         }
 
+        # Find letters and translate from lexicon
         find = list(map(lexicon.get, split))
-        result = ''.join(find)
-        print(result)
 
+        # Find the capital inside input and convert to lowercase
+        find_capital = re.findall('([A-Z])', input)
+        print(find_capital)
+        for word in range(len(find_capital)):
+            find_capital[word] = find_capital[word].lower()
+        find_capital_lexed = list(map(lexicon.get, find_capital))
 
-Solutions.solution("CODE")
+        # Replace
+        modified_base_list = [next(("000001" + y for y in find_capital_lexed if y == x), x) for x in find]
+
+        # Print result
+        result = ''.join(modified_base_list)
+
+Solutions.solution("The quick brown fox jumps over the lazy dog")
